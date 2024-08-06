@@ -181,6 +181,10 @@ key:depends("passmode", "chacha20")
 key:depends("passmode", "chacha20_poly1305")
 key:depends("passmode", "xor")
 
+local_ipv4  = s:taboption("privacy",Value, "local_ipv4", translate("出口节点IP地址"),
+	translate("本地出口网卡的ipv4地址"))
+local_ipv4.optional = false
+
 serverw = s:taboption("privacy",Flag, "serverw", translate("启用服务端客户端加密"),
 	translate("用服务端通信的数据加密，采用rsa+aes256gcm加密客户端和服务端之间通信的数据，可以避免token泄漏、中间人攻击，<br>上面的加密模式是客户端与客户端之间加密，这是服务器和客户端之间的加密，不是一个性质，无需选择加密模式"))
 serverw.rmempty = false
@@ -192,6 +196,10 @@ finger.rmempty = false
 first_latency = s:taboption("privacy",Flag, "first_latency", translate("启用优化传输"),
 	translate("启用后优先使用低延迟通道，默认情况下优先使用p2p通道，某些情况下可能p2p比客户端中继延迟更高，可启用此参数进行优化传输"))
 first_latency.rmempty = false
+
+disable_stats = s:taboption("privacy",Flag, "disable_stats", translate("启用流量统计"),
+	translate("记录vnt使用的流量统计信息"))
+disable_stats.rmempty = false
 
 check = s:taboption("privacy",Flag, "check", translate("通断检测"),
         translate("开启通断检测后，可以指定对端的设备IP，当所有指定的IP都ping不通时将会重启vnt程序"))
@@ -323,7 +331,7 @@ btnchart = s:taboption("infos", Button, "btnchart")
 btnchart.inputtitle = translate("设备流量统计")
 btnchart.description = translate("点击按钮刷新，查看所有设备流量统计")
 btnchart.inputstyle = "apply"
-btnchart:depends("cmdmode", "原版")
+btnchart:depends({ cmdmode = "原版", disable_stats = "1" })
 btnchart.write = function()
 if process_status ~= "" then
     luci.sys.call("$(uci -q get vnt.@vnt-cli[0].clibin) --chart_a >/tmp/vnt-cli_chart")
@@ -379,7 +387,7 @@ local upload = s:taboption("upload", FileUpload, "upload_file")
 upload.optional = true
 upload.default = ""
 upload.template = "vnt/other_upload"
-upload.description = translate("可直接上传二进制程序vnt-cli和vnts或者以.tar.gz结尾的压缩包,上传新版本会自动覆盖旧版本，下载地址：<a href='https://github.com/lbl8603/vnt/releases' target='_blank'>vnt-cli</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://github.com/lbl8603/vnts/releases' target='_blank'>vnts</a><br>上传的文件将会保存在/tmp文件夹里，如果在高级设置里自定义了程序路径那么启动程序时将会自动移至自定义的路径<br>")
+upload.description = translate("可直接上传二进制程序vnt-cli和vnts或者以.tar.gz结尾的压缩包,上传新版本会自动覆盖旧版本，下载地址：<a href='https://github.com/vnt-dev/vnt/releases' target='_blank'>vnt-cli</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://github.com/vnt-dev/vnts/releases' target='_blank'>vnts</a><br>上传的文件将会保存在/tmp文件夹里，如果在高级设置里自定义了程序路径那么启动程序时将会自动移至自定义的路径<br>")
 local um = s:taboption("upload",DummyValue, "", nil)
 um.template = "vnt/other_dvalue"
 
