@@ -3,7 +3,7 @@ local http = luci.http
 local nixio = require "nixio"
 
 m = Map("vnt")
-m.description = translate('vnt是一个简便高效的异地组网、内网穿透工具。项目地址：<a href="https://github.com/lbl8603/vnt">github.com/lbl8603/vnt</a>&nbsp;&nbsp;<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o3Rr9xUWwAAnV9TkU_Nyj3yHNLs9k5F5&authKey=l1FKvqk7%2F256SK%2FHrw0PUhs%2Bar%2BtKYx0pLb7aiwBN9%2BKBCY8sOzWWEqtl4pdXAT7&noverify=0&group_code=1034868233">QQ群</a>&nbsp;&nbsp;安卓端：<a href="https://github.com/lbl8603/VntApp">VntApp</a>')
+m.description = translate('vnt是一个简便高效的异地组网、内网穿透工具。<br>官网：<a href="http://rustvnt.com/">rustvnt.com</a>&nbsp;&nbsp;项目地址：<a href="https://github.com/lbl8603/vnt">github.com/vnt-dev/vnt</a>&nbsp;&nbsp;安卓端、GUI：<a href="https://github.com/lbl8603/VntApp">VntApp</a>&nbsp;&nbsp;<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o3Rr9xUWwAAnV9TkU_Nyj3yHNLs9k5F5&authKey=l1FKvqk7%2F256SK%2FHrw0PUhs%2Bar%2BtKYx0pLb7aiwBN9%2BKBCY8sOzWWEqtl4pdXAT7&noverify=0&group_code=1034868233">QQ群</a>')
 
 -- vnt-cli
 m:section(SimpleSection).template  = "vnt/vnt_status"
@@ -84,7 +84,7 @@ allow_wg = s:taboption("general",Flag, "allow_wg", translate("允许WireGuard接
 allow_wg.rmempty = false
 
 log = s:taboption("general",Flag, "log", translate("启用日志"),
-	translate("运行日志在/tmp/vnt.log,可在上方客户端日志查看，无法启动等详细错误日志在 状态-系统日志里查看"))
+	translate("运行日志在/tmp/vnt.log,可在上方客户端日志查看"))
 log.rmempty = false
 
 clibin = s:taboption("privacy", Value, "clibin", translate("vnt-cli程序路径"),
@@ -141,7 +141,7 @@ mapping.placeholder = "tcp:0.0.0.0:80->10.26.0.10:80"
 mtu = s:taboption("privacy",Value, "mtu", translate("MTU"),
 	translate("设置虚拟网卡的mtu值，大多数情况下（留空）使用默认值效率会更高，也可根据实际情况进行微调，默认值：不加密1450，加密1410"))
 mtu.datatype = "range(1,1500)"
-mtu.placeholder = "1438"
+mtu.placeholder = "1300"
 
 par = s:taboption("privacy",Value, "par", translate("并行任务数"),
 	translate("默认留空，任务并行度(必须为正整数),默认值为1,该值表示处理网卡读写的任务数,组网设备数较多、处理延迟较大时可适当调大此值"))
@@ -488,7 +488,7 @@ web_wan.rmempty = false
 web_wan:depends("web", "1")
 
 logs = s:taboption("gen",Flag, "logs", translate("启用日志"),
-	translate("运行日志在/tmp/vnts.log，可在上方服务端日志查看，无法启动等详细错误日志在 状态-系统日志里查看"))
+	translate("运行日志在/tmp/vnts.log，可在上方服务端日志查看"))
 logs.rmempty = false
 
 vntsbin = s:taboption("pri",Value, "vntsbin", translate("vnts程序路径"),
