@@ -26,7 +26,7 @@ on:
 
 jobs:
   merge:
-    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id || github.event.sender.id == '119362912'
+    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id || github.event.sender.id == '115566356'
     runs-on: Ubuntu-22.04
 
     steps:
@@ -37,7 +37,7 @@ jobs:
 
     - uses: de-vri-es/setup-git-credentials@v2
       with:
-        credentials: https://kiddin9:${{ secrets.TOKEN_KIDDIN9 }}@github.com/
+        credentials: https://xiaoka6666:${{ secrets.TOKEN_KIDDIN9 }}@github.com/
     
     - name: Set git identity
       run : |
@@ -81,7 +81,7 @@ jobs:
         }
         (
         git_clone https://github.com/kiddin9/my-packages && mvdir my-packages
-        git_clone https://github.com/kiddin9/openwrt-bypass && mvdir openwrt-bypass
+        git_clone https://github.com/xiaoka6666/openwrt-bypass && mvdir openwrt-bypass
         git_clone https://github.com/kiddin9/luci-app-dnsfilter
         git_clone https://github.com/kiddin9/aria2
         git_clone https://github.com/kiddin9/luci-theme-edge
