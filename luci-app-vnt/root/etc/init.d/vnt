@@ -107,7 +107,7 @@ fi
                 config_get stunhost "$cfg" 'stunhost'
                 config_get client_port "$cfg" 'client_port'
                 config_get par "$cfg" 'par'
-                config_get punch "$cfg" 'punch'
+                config_get punch "$cfg" 'punch' 'all'
                 config_get passmode "$cfg" 'passmode'
                 config_get peeradd "$cfg" 'peeradd'
                 config_get localadd "$cfg" 'localadd'
@@ -223,7 +223,7 @@ EOF
 		[ -z "$par" ] || procd_append_param command --par "$par"
 		[ -z "$tunname" ] || procd_append_param command --nic "$tunname"
                 [ -z "$local_ipv4" ] || procd_append_param command --local-ipv4 "$local_ipv4"
-		[ "$punch" = "ipv4/ipv6" ] || procd_append_param command --punch "$punch"
+		procd_append_param command --punch "$punch"
 		[ "$passmode" != "off" ] && [ -n "$key" ] && procd_append_param command --model "$passmode"
 		[ "$passmode" != "off" ] && [ -n "$key" ] && procd_append_param command -w "$key"
 		[ "$tunmode" = "tun" ] || procd_append_param command -a
@@ -305,7 +305,7 @@ EOF
 		[ "$forward" = "0" ] || sysctl -w net.ipv4.ip_forward=1 >/dev/null 2>&1
                 [ ! -z "$checkip" ] && check
                 echo `date +%s` > /tmp/vnt_time
-                echo "$(date '+%Y-%m-%d %H:%M:%S') 若启动失败请前往 状态-系统日志 查看具体原因 " >>/tmp/vnt-cli.log
+                
 }
 
 check () {
